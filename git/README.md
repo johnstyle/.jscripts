@@ -1,4 +1,5 @@
 ##Utilisation :##
-```[include]
+```
+[include]
     path = ~/Script/git/gitconfig
 ```

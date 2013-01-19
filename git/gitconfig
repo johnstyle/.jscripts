@@ -33,6 +33,7 @@
 [alias]
     st = status
     ci = commit
+    cm = commit -m
     br = branch
     df = diff
     lg = log -p

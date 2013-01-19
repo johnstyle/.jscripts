@@ -117,4 +117,4 @@ __git_bash_prompt() {
 }
 
 gitinfo='$(__git_bash_prompt "\w")'
-PS1="${BGreen}\u${Yellow}@local-PC ${Red}${gitinfo}${Red} > ${White}"
+PS1="${BGreen}\u${Yellow}@\h ${Red}${gitinfo}${Red} > ${White}"

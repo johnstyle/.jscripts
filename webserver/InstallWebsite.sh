@@ -62,10 +62,40 @@ if [ "$(whoami)" = "root" ]; then
 		            git clone ${pathGit}
 		            echo "${green} - - - Clonage du projet Git${reset}"
                 fi
+                
+		        # Premier commit
+		        # ------------------------------
+                if [ ! -f "${pathHome}/.gitignore" ]; then
+		            echo "
+		            # Logs and databases #
+		            ######################
+		            *.log
+		            *.cache
+		            .project
+
+		            # Path #
+		            ########
+		            tmp/
+		            cache/
+		            logs/
+		            log/
+		            cache/
+		            .settings/
+		            " > ${pathHome}/.gitignore
+		            chown ${user}:${user} ${pathHome}/.gitignore
+		            if [ -f "${pathHome}/.gitignore" ]; then
+		                cd ${pathHome}
+		                git add .
+		                git commit -m "Mise en place du site internet"
+		                git tag v1.0.0
+		                git push --tags origin master
+		                echo "${green} - - - Premier commit Git${reset}"
+		            else
+	                    echo "${red} - - - Erreur lors du premier commit Git${reset}"
+		            fi
+		        fi 
 		    fi
 
-		    cd ${pathHome}
-		    
 		    # Création du dossier logs
 		    # ------------------------------
 		    if [ ! -d "${pathHome}/logs" ]; then
@@ -97,7 +127,7 @@ if [ "$(whoami)" = "root" ]; then
 
 		    # Création du Vhost
 		    # ------------------------------
-		    if [ ! -d "/etc/apache2/sites-enabled/${website}" ]; then		
+		    if [ ! -f "/etc/apache2/sites-enabled/${website}" ]; then		
 		        echo "
 		        <VirtualHost *:80>
 			        ServerAdmin contact@${website}
@@ -115,7 +145,7 @@ if [ "$(whoami)" = "root" ]; then
 		        </VirtualHost>
 		        " > /etc/apache2/sites-available/${website}
 
-		        if [ -d "/etc/apache2/sites-available/${website}" ]; then
+		        if [ -f "/etc/apache2/sites-available/${website}" ]; then
 		        
 		            # Ajout du site à Apache
 		            # ------------------------------
@@ -147,39 +177,8 @@ if [ "$(whoami)" = "root" ]; then
 	                echo "${green} - - - Création de la base MySql${reset}"
                 fi
             fi
-
-		    # Premier commit
-		    # ------------------------------
-		    if [ "${useGit}" = "y" ]; then
-		        if [ ! -d "${pathHome}/.gitignore" ]; then
-		            echo "
-		            # Logs and databases #
-		            ######################
-		            *.log
-		            *.cache
-		            .project
-
-		            # Path #
-		            ########
-		            tmp/
-		            cache/
-		            logs/
-		            log/
-		            cache/
-		            .settings/
-		            " > ${pathHome}/.gitignore
-		            chown ${user}:${user} ${pathHome}/.gitignore
-		            if [ -d "${pathHome}/.gitignore" ]; then
-		                git add .
-		                git commit -m "Mise en place du site internet"
-		                git tag v1.0.0
-		                git push --tags origin master
-		                echo "${green} - - - Premier commit Git${reset}"
-		            else
-	                    echo "${red} - - - Erreur lors du premier commit Git${reset}"
-		            fi
-		        fi		        
-		    fi
+            
+            cd ${pathHome}
 	    else
 		    echo "${red} - - - Cet utilisateur existe déjà${reset}"
 	    fi	    

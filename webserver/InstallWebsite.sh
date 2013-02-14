@@ -168,6 +168,7 @@ if [ "$(whoami)" = "root" ]; then
 		            cache/
 		            .settings/
 		            " > ${pathHome}/.gitignore
+		            chown ${user}:${user} ${pathHome}/.gitignore
 		            if [ -d "${pathHome}/.gitignore" ]; then
 		                git add .
 		                git commit -m "Mise en place du site internet"

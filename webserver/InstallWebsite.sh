@@ -25,14 +25,14 @@ if [ "$(whoami)" = "root" ]; then
         fi
 
 		pathHome="/home/${user}"
-		pathGit="/home/git/repositories/${website}"
+		pathGit="/home/git/repositories/${user}"
         
 		if [ ! -d "${pathHome}" ]; then
 	
 		    # Création de l'utilisateur
 		    # ------------------------------
-	        useradd -m ${user}
-	        if [ -d "${pathHome}" ]; then
+	        useradd ${user}
+	        if id -u ${user} >/dev/null 2>&1; then
 	            echo "${green} - - - Création de l'utilisateur${reset}"
 	        else
 	            echo "${red} - - - Erreur lors de la création de l'utilisateur${reset}"
@@ -58,11 +58,13 @@ if [ "$(whoami)" = "root" ]; then
 		        # Clone du projet GIT
 		        # ------------------------------
 		        if [ -d "${pathGit}" ]; then
-		        	cd ${pathHome}
+		        	cd /home
 		            git clone ${pathGit}
-		            echo "${green} - - - Clonage du projet GIT${reset}"
+		            echo "${green} - - - Clonage du projet Git${reset}"
                 fi
 		    fi
+
+		    cd ${pathHome}
 		    
 		    # Création du dossier logs
 		    # ------------------------------
@@ -91,6 +93,7 @@ if [ "$(whoami)" = "root" ]; then
 		    chmod 705 ${pathHome}
 		    chmod 700 ${pathHome}/httpdocs
 		    chmod 600 ${pathHome}/logs
+		    chown -R ${user}:${user} ${pathHome}
 
 		    # Création du Vhost
 		    # ------------------------------

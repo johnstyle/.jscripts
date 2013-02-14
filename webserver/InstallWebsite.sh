@@ -12,13 +12,13 @@ white='\033[0;37m'
 
 if [ "$(whoami)" = "root" ]; then
 
-    echo -n "Nom de domaine : "
+    echo -en "Nom de domaine : "
     read website
     if [ "${website}" ]; then
 
 		defaultUser=$(echo ${website} | sed 's/\..*//g')
 
-        echo -n "Nom d'utilisateur (${defaultUser}) : "
+        echo -en "Nom d'utilisateur (${defaultUser}) : "
         read user
         if [ ! "${user}" ]; then
             user=${defaultUser}
@@ -33,14 +33,14 @@ if [ "$(whoami)" = "root" ]; then
 		    # ------------------------------
 	        useradd ${user}
 	        if id -u ${user} >/dev/null 2>&1; then
-	            echo "${green} - - - Création de l'utilisateur${reset}"
+	            echo -e "${green} - - - Création de l'utilisateur${reset}"
 	        else
-	            echo "${red} - - - Erreur lors de la création de l'utilisateur${reset}"
+	            echo -e "${red} - - - Erreur lors de la création de l'utilisateur${reset}"
 	        fi
 	        
 	        # Création du projet GIT
 		    # ------------------------------
-            echo -n "Créer un projet Git ? [y/n] "
+            echo -en "Créer un projet Git ? [y/n] "
             read useGit
 		    if [ "${useGit}" = "y" ]; then
 		        if [ ! -d "${pathGit}" ]; then
@@ -49,9 +49,9 @@ if [ "$(whoami)" = "root" ]; then
 		                cd ${pathGit}
 		                git init --bare
 		                chown -R git:git ${pathGit}
-		                echo "${green} - - - Création du projet Git${reset}"
+		                echo -e "${green} - - - Création du projet Git${reset}"
 	                else
-	                    echo "${red} - - - Erreur lors de la création du projet Git${reset}"
+	                    echo -e "${red} - - - Erreur lors de la création du projet Git${reset}"
 	                fi
 		        fi
 
@@ -60,7 +60,7 @@ if [ "$(whoami)" = "root" ]; then
 		        if [ -d "${pathGit}" ]; then
 		        	cd /home
 		            git clone ${pathGit}
-		            echo "${green} - - - Clonage du projet Git${reset}"
+		            echo -e "${green} - - - Clonage du projet Git${reset}"
                 fi
                 
 		        # Premier commit
@@ -89,9 +89,9 @@ if [ "$(whoami)" = "root" ]; then
 		                git commit -m "Mise en place du site internet"
 		                git tag v1.0.0
 		                git push --tags origin master
-		                echo "${green} - - - Premier commit Git${reset}"
+		                echo -e "${green} - - - Premier commit Git${reset}"
 		            else
-	                    echo "${red} - - - Erreur lors du premier commit Git${reset}"
+	                    echo -e "${red} - - - Erreur lors du premier commit Git${reset}"
 		            fi
 		        fi 
 		    fi
@@ -101,9 +101,9 @@ if [ "$(whoami)" = "root" ]; then
 		    if [ ! -d "${pathHome}/logs" ]; then
 		        mkdir "${pathHome}/logs"
 		        if [ "${pathHome}/logs" ]; then
-		            echo "${green} - - - Création du dossier logs${reset}"
+		            echo -e "${green} - - - Création du dossier logs${reset}"
 		        else
-	                echo "${red} - - - Erreur lors de la création du dossier logs${reset}"
+	                echo -e "${red} - - - Erreur lors de la création du dossier logs${reset}"
 		        fi
 		    fi
 		    
@@ -112,9 +112,9 @@ if [ "$(whoami)" = "root" ]; then
 		    if [ ! -d "${pathHome}/httpdocs" ]; then
 		        mkdir "${pathHome}/httpdocs"
 		        if [ "${pathHome}/httpdocs" ]; then
-		            echo "${green} - - - Création du dossier httpdocs${reset}"
+		            echo -e "${green} - - - Création du dossier httpdocs${reset}"
 		        else
-	                echo "${red} - - - Erreur lors de la création du dossier httpdocs${reset}"
+	                echo -e "${red} - - - Erreur lors de la création du dossier httpdocs${reset}"
 		        fi
 		    fi
 		    
@@ -155,37 +155,38 @@ if [ "$(whoami)" = "root" ]; then
 		            # ------------------------------
 		            service apache2 restart
 		            
-		            echo "${green} - - - Configuration du VirtualHost${reset}"
+		            echo -e "${green} - - - Configuration du VirtualHost${reset}"
 		        else
-	                echo "${red} - - - Erreur lors de la configuration du VirtualHost${reset}"
+	                echo -e "${red} - - - Erreur lors de la configuration du VirtualHost${reset}"
 		        fi
 	        else
-                echo "${red} - - - Erreur le site est déjà actif${reset}"
+                echo -e "${red} - - - Erreur le site est déjà actif${reset}"
 	        fi
 
 	        # Création de la base MySql
 	        # ------------------------------
-	        echo -n "Créer une base de donnée MySql ? [y/n] "
+	        echo -en "Créer une base de donnée MySql ? [y/n] "
             read useMysql
 	        if [ "${useMysql}" = "y" ]; then
-	            echo -n "\nVeuillez saisir le mot de passe qui sera utilisé pour creer la base de donnée : "
+	            echo -en "\nVeuillez saisir le mot de passe qui sera utilisé pour creer la base de donnée : "
                 stty -echo
                 read password
                 stty echo
 	            if [ "${password}" ]; then
 	                mysql -u root -p -e "create database ${user}; grant usage on *.* to ${user}@localhost identified by '${password}'; grant all privileges on ${user}.* to ${user}@localhost;"
-	                echo "${green} - - - Création de la base MySql${reset}"
+	                echo -e "${green} - - - Création de la base MySql${reset}"
                 fi
             fi
             
             cd ${pathHome}
+            echo -e "${green} - - - ${website} est installé !${reset}"
 	    else
-		    echo "${red} - - - Cet utilisateur existe déjà${reset}"
+		    echo -e "${red} - - - Cet utilisateur existe déjà${reset}"
 	    fi	    
 	else
-		echo "${red} - - - Veuillez renseigner un nom de domaine${reset}"
+		echo -e "${red} - - - Veuillez renseigner un nom de domaine${reset}"
 	fi
 else
-	echo "${red} - - - Vous devez être en ROOT${reset}"
+	echo -e "${red} - - - Vous devez être en ROOT${reset}"
 fi
 

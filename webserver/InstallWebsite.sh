@@ -4,7 +4,7 @@ reset='\033[0m'
 black='\033[0;30m'
 red='\033[0;31m'
 green='\033[0;32m'
-yellow='\033[1;33m'
+yellow='\033[0;33m'
 blue='\033[0;34m'
 purple='\033[0;35m'
 cyan='\033[0;36m'
@@ -66,22 +66,23 @@ if [ "$(whoami)" = "root" ]; then
 		        # Premier commit
 		        # ------------------------------
                 if [ ! -f "${pathHome}/.gitignore" ]; then
-		            echo "
-		            # Logs and databases #
-		            ######################
-		            *.log
-		            *.cache
-		            .project
 
-		            # Path #
-		            ########
-		            tmp/
-		            cache/
-		            logs/
-		            log/
-		            cache/
-		            .settings/
-		            " > ${pathHome}/.gitignore
+echo "# Logs and databases #
+######################
+*.log
+*.cache
+.project
+
+# Path #
+########
+tmp/
+cache/
+logs/
+log/
+cache/
+.settings/
+" > ${pathHome}/.gitignore
+
 		            chown ${user}:${user} ${pathHome}/.gitignore
 		            if [ -f "${pathHome}/.gitignore" ]; then
 		                cd ${pathHome}
@@ -127,41 +128,42 @@ if [ "$(whoami)" = "root" ]; then
 
 		    # Création du Vhost
 		    # ------------------------------
-		    if [ ! -f "/etc/apache2/sites-enabled/${website}" ]; then		
-		        echo "
-		        <VirtualHost *:80>
-			        ServerAdmin contact@${website}
-			        ServerName www.${website}
-			        ServerAlias ${website} *.${website}
-			        DocumentRoot ${pathHome}/httpdocs
-			        <Directory ${pathHome}/httpdocs>
-			                Options -Indexes FollowSymLinks MultiViews
-			                AllowOverride All
-			        </Directory>
-			        ErrorLog ${pathHome}/logs/error.log
-			        LogLevel warn
-			        CustomLog ${pathHome}/logs/access.log combined
-			        ServerSignature Off
-		        </VirtualHost>
-		        " > /etc/apache2/sites-available/${website}
+		    if [ ! -f "/etc/apache2/sites-enabled/${website}" ]; then
+		        echo -e "${purple}"
+		        a2dissite ${website}
+		        echo -e "${reset}"
+		    fi
 
-		        if [ -f "/etc/apache2/sites-available/${website}" ]; then
-		        
-		            # Ajout du site à Apache
-		            # ------------------------------
-		            a2ensite ${website}
+echo "<VirtualHost *:80>
+    ServerAdmin contact@${website}
+    ServerName www.${website}
+    ServerAlias ${website} *.${website}
+    DocumentRoot ${pathHome}/httpdocs
+    <Directory ${pathHome}/httpdocs>
+            Options -Indexes FollowSymLinks MultiViews
+            AllowOverride All
+    </Directory>
+    ErrorLog ${pathHome}/logs/error.log
+    LogLevel warn
+    CustomLog ${pathHome}/logs/access.log combined
+    ServerSignature Off
+</VirtualHost>
+" > /etc/apache2/sites-available/${website}
 
-		            # Redémarage de Apache
-		            # ------------------------------
-		            service apache2 restart
-		            
-		            echo -e "${green} - - - Configuration du VirtualHost${reset}"
-		        else
-	                echo -e "${red} - - - Erreur lors de la configuration du VirtualHost${reset}"
-		        fi
+	        if [ -f "/etc/apache2/sites-available/${website}" ]; then
+		        echo -e "${purple}"
+	            a2ensite ${website}
+	            service apache2 restart
+		        echo -e "${reset}"
+	            if [ ! -f "/etc/apache2/sites-enabled/${website}" ]; then
+	                echo -e "${green} - - - Activation du site${reset}"
+                else
+                    echo -e "${red} - - - Erreur lors de l'activation du site${reset}"
+                fi		            
 	        else
-                echo -e "${red} - - - Erreur le site est déjà actif${reset}"
+                echo -e "${red} - - - Erreur lors de la configuration du VirtualHost${reset}"
 	        fi
+
 
 	        # Création de la base MySql
 	        # ------------------------------
@@ -179,7 +181,9 @@ if [ "$(whoami)" = "root" ]; then
             fi
             
             cd ${pathHome}
+            
             echo -e "${green} - - - ${website} est installé !${reset}"
+            
 	    else
 		    echo -e "${red} - - - Cet utilisateur existe déjà${reset}"
 	    fi	    

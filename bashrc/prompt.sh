@@ -50,7 +50,7 @@ __parse_git_added() {
   [[ $(git status 2> /dev/null | grep "Untracked files:") != "" ]] && echo '+'
 }
 __parse_git_modified() {
-  [[ $(git status 2> /dev/null | grep "modified:\|new file:") != "" ]] && echo "*"
+  [[ $(git status 2> /dev/null | grep "renamed:\|modified:\|new file:") != "" ]] && echo "*"
 }
 __parse_git_notclean() {
   [[ $(git status 2> /dev/null | grep "nothing to commit") == "" ]] && echo "!"

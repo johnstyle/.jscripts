@@ -32,7 +32,7 @@
     untracked = yellow
 
 [alias]
-    st = status
+    st = status -bs
     ci = commit
     cm = commit -m
     br = branch

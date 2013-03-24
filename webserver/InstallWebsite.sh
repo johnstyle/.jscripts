@@ -25,7 +25,7 @@ if [ "$(whoami)" = "root" ]; then
         fi
 
 		pathHome="/home/${user}"
-		pathGit="/home/git/repositories/${user}"
+		pathGit="/home/git/repositories/websites/${user}"
         
 		if [ ! -d "${pathHome}" ]; then
 	
@@ -59,7 +59,9 @@ if [ "$(whoami)" = "root" ]; then
 		        # ------------------------------
 		        if [ -d "${pathGit}" ]; then
 		        	cd /home
+		        	echo -e "${purple}"
 		            git clone ${pathGit}
+		            echo -e "${reset}"
 		            echo -e "${green} - - - Clonage du projet Git${reset}"
                 fi
                 
@@ -67,7 +69,7 @@ if [ "$(whoami)" = "root" ]; then
 		        # ------------------------------
                 if [ ! -f "${pathHome}/.gitignore" ]; then
 
-echo "# Logs and databases #
+printf "# Logs and databases #
 ######################
 *.log
 *.cache
@@ -86,10 +88,12 @@ cache/
 		            chown ${user}:${user} ${pathHome}/.gitignore
 		            if [ -f "${pathHome}/.gitignore" ]; then
 		                cd ${pathHome}
+		                echo -e "${purple}"
 		                git add .
 		                git commit -m "Mise en place du site internet"
 		                git tag v1.0.0
 		                git push --tags origin master
+		                echo -e "${reset}"
 		                echo -e "${green} - - - Premier commit Git${reset}"
 		            else
 	                    echo -e "${red} - - - Erreur lors du premier commit Git${reset}"
@@ -108,22 +112,28 @@ cache/
 		        fi
 		    fi
 		    
-		    # Création du dossier httpdocs
+		    # Création du dossier www
 		    # ------------------------------
-		    if [ ! -d "${pathHome}/httpdocs" ]; then
-		        mkdir "${pathHome}/httpdocs"
-		        if [ "${pathHome}/httpdocs" ]; then
-		            echo -e "${green} - - - Création du dossier httpdocs${reset}"
+		    if [ ! -d "${pathHome}/www" ]; then
+		        mkdir "${pathHome}/www"
+		        if [ "${pathHome}/www" ]; then
+		            echo -e "${green} - - - Création du dossier www${reset}"
 		        else
-	                echo -e "${red} - - - Erreur lors de la création du dossier httpdocs${reset}"
+	                echo -e "${red} - - - Erreur lors de la création du dossier www${reset}"
 		        fi
 		    fi
 		    
 		    # Configuration des droits sur les dossiers
 		    # ------------------------------
-		    chmod 705 ${pathHome}
-		    chmod 700 ${pathHome}/httpdocs
+		    chmod 701 ${pathHome}
+		    chmod 701 ${pathHome}/www
 		    chmod 600 ${pathHome}/logs
+
+		    if [ "${useGit}" = "y" ]; then
+		        chmod -R 600 ${pathHome}/.git
+		  		chmod 600 ${pathHome}/.gitignore 
+		    fi
+
 		    chown -R ${user}:${user} ${pathHome}
 
 		    # Création du Vhost
@@ -134,19 +144,43 @@ cache/
 		        echo -e "${reset}"
 		    fi
 
-echo "<VirtualHost *:80>
+printf "<VirtualHost *:80>
     ServerAdmin contact@${website}
     ServerName www.${website}
     ServerAlias ${website} *.${website}
-    DocumentRoot ${pathHome}/httpdocs
-    <Directory ${pathHome}/httpdocs>
-            Options -Indexes FollowSymLinks MultiViews
-            AllowOverride All
+    DocumentRoot ${pathHome}/www/
+    SuExecUserGroup ${user} ${user}
+    suPHP_Engine On
+    suPHP_ConfigPath ${pathHome}/www/  
+    <Directory ${pathHome}/www/>
+        Options -Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Order Deny,Allow
     </Directory>
     ErrorLog ${pathHome}/logs/error.log
     LogLevel warn
     CustomLog ${pathHome}/logs/access.log combined
     ServerSignature Off
+    ServerTokens Prod
+    
+    <IfModule mod_userdir.c>
+        UserDir www
+        UserDir disabled root
+        <Directory /home/*/www>
+            php_admin_value open_basedir ./
+            AllowOverride FileInfo AuthConfig Limit Indexes
+            Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec
+            <Limit GET POST OPTIONS>
+                Order allow,deny
+                Allow from all
+            </Limit>
+            <LimitExcept GET POST OPTIONS>
+                Order deny,allow
+                Deny from all
+            </LimitExcept>
+        </Directory>
+    </IfModule>
+
 </VirtualHost>
 " > /etc/apache2/sites-available/${website}
 

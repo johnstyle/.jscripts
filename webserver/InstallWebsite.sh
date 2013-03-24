@@ -150,8 +150,6 @@ printf "<VirtualHost *:80>
     ServerAlias ${website} *.${website}
     DocumentRoot ${pathHome}/www/
     SuExecUserGroup ${user} ${user}
-    suPHP_Engine On
-    suPHP_ConfigPath ${pathHome}/www/  
     <Directory ${pathHome}/www/>
         Options -Indexes FollowSymLinks MultiViews
         AllowOverride All
@@ -160,8 +158,6 @@ printf "<VirtualHost *:80>
     ErrorLog ${pathHome}/logs/error.log
     LogLevel warn
     CustomLog ${pathHome}/logs/access.log combined
-    ServerSignature Off
-    ServerTokens Prod
     
     <IfModule mod_userdir.c>
         UserDir www
@@ -209,6 +205,7 @@ printf "<VirtualHost *:80>
                 read password
                 stty echo
 	            if [ "${password}" ]; then
+	                printf "\nMot de passe ROOT - "
 	                mysql -u root -p -e "create database ${user}; grant usage on *.* to ${user}@localhost identified by '${password}'; grant all privileges on ${user}.* to ${user}@localhost;"
 	                echo -e "${green} - - - Création de la base MySql${reset}"
                 fi

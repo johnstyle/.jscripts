@@ -69,20 +69,51 @@ if [ "$(whoami)" = "root" ]; then
 		        # ------------------------------
                 if [ ! -f "${pathHome}/.gitignore" ]; then
 
-printf "# Logs and databases #
-######################
+printf "# Numerous always-ignore extensions
+*.diff
+*.err
+*.orig
 *.log
-*.cache
-.project
+*.rej
+*.swo
+*.swp
+*.zip
+*.vi
+*~
+*.sass-cache
 
-# Path #
-########
-tmp/
-cache/
-logs/
-log/
-cache/
-.settings/
+# OS or Editor folders
+.DS_Store
+._*
+Thumbs.db
+.cache
+.project
+.settings
+.tmproj
+*.esproj
+nbproject
+*.sublime-project
+*.sublime-workspace
+
+# Komodo
+*.komodoproject
+.komodotools
+
+# Folders to ignore
+.hg
+.svn
+.CVS
+.idea
+node_modules
+dist
+
+# Home
+.bash_history
+.mysql_history
+tmp
+logs
+log
+cache
 " > ${pathHome}/.gitignore
 
 		            chown ${user}:${user} ${pathHome}/.gitignore
@@ -123,10 +154,22 @@ cache/
 		        fi
 		    fi
 		    
+		    # Création du dossier tmp
+		    # ------------------------------
+		    if [ ! -d "${pathHome}/tmp" ]; then
+		        mkdir "${pathHome}/tmp"
+		        if [ "${pathHome}/tmp" ]; then
+		            echo -e "${green} - - - Création du dossier tmp${reset}"
+		        else
+	                echo -e "${red} - - - Erreur lors de la création du dossier tmp${reset}"
+		        fi
+		    fi
+		    
 		    # Configuration des droits sur les dossiers
 		    # ------------------------------
 		    chmod 701 ${pathHome}
 		    chmod 701 ${pathHome}/www
+		    chmod 701 ${pathHome}/tmp
 		    chmod 600 ${pathHome}/logs
 
 		    if [ "${useGit}" = "y" ]; then
@@ -135,6 +178,7 @@ cache/
 		    fi
 
 		    chown -R ${user}:${user} ${pathHome}
+		    chown -R www-data:www-data ${pathHome}/tmp
 
 		    # Création du Vhost
 		    # ------------------------------
@@ -158,25 +202,6 @@ printf "<VirtualHost *:80>
     ErrorLog ${pathHome}/logs/error.log
     LogLevel warn
     CustomLog ${pathHome}/logs/access.log combined
-    
-    <IfModule mod_userdir.c>
-        UserDir www
-        UserDir disabled root
-        <Directory /home/*/www>
-            php_admin_value open_basedir ./
-            AllowOverride FileInfo AuthConfig Limit Indexes
-            Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec
-            <Limit GET POST OPTIONS>
-                Order allow,deny
-                Allow from all
-            </Limit>
-            <LimitExcept GET POST OPTIONS>
-                Order deny,allow
-                Deny from all
-            </LimitExcept>
-        </Directory>
-    </IfModule>
-
 </VirtualHost>
 " > /etc/apache2/sites-available/${website}
 
@@ -185,7 +210,7 @@ printf "<VirtualHost *:80>
 	            a2ensite ${website}
 	            service apache2 restart
 		        echo -e "${reset}"
-	            if [ ! -f "/etc/apache2/sites-enabled/${website}" ]; then
+	            if [ -f "/etc/apache2/sites-enabled/${website}" ]; then
 	                echo -e "${green} - - - Activation du site${reset}"
                 else
                     echo -e "${red} - - - Erreur lors de l'activation du site${reset}"

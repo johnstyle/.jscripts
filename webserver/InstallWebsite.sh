@@ -178,7 +178,6 @@ cache
 		    fi
 
 		    chown -R ${user}:${user} ${pathHome}
-		    chown -R www-data:www-data ${pathHome}/tmp		    
 		    chown -R root:root ${pathHome}/logs
 
 		    if [ "${useGit}" = "y" ]; then
@@ -197,7 +196,7 @@ cache
 printf "<VirtualHost *:80>
     ServerAdmin contact@${website}
     ServerName www.${website}
-    ServerAlias ${website} *.${website}
+    ServerAlias ${website}
     DocumentRoot ${pathHome}/www/
     SuExecUserGroup ${user} ${user}
     <Directory ${pathHome}/www/>

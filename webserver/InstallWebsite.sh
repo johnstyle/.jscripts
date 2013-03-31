@@ -168,7 +168,7 @@ cache
 		    # Configuration des droits sur les dossiers
 		    # ------------------------------
 		    chmod 701 ${pathHome}
-		    chmod 701 ${pathHome}/www
+		    chmod 705 ${pathHome}/www
 		    chmod 701 ${pathHome}/tmp
 		    chmod 600 ${pathHome}/logs
 
@@ -178,8 +178,14 @@ cache
 		    fi
 
 		    chown -R ${user}:${user} ${pathHome}
-		    chown -R www-data:www-data ${pathHome}/tmp
+		    chown -R www-data:www-data ${pathHome}/tmp		    
+		    chown -R root:root ${pathHome}/logs
 
+		    if [ "${useGit}" = "y" ]; then
+		        chown -R root:root ${pathHome}/.git
+		        chown -R root:root ${pathHome}/.gitignore
+		    fi
+		  
 		    # Création du Vhost
 		    # ------------------------------
 		    if [ ! -f "/etc/apache2/sites-enabled/${website}" ]; then

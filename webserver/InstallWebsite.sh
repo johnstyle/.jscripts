@@ -110,6 +110,7 @@ dist
 # Home
 .bash_history
 .mysql_history
+conf
 tmp
 logs
 log
@@ -165,13 +166,25 @@ cache
 		        fi
 		    fi
 		    
+		    # Création du dossier conf
+		    # ------------------------------
+		    if [ ! -d "${pathHome}/conf" ]; then
+		        mkdir "${pathHome}/conf"
+		        if [ "${pathHome}/conf" ]; then
+		            echo -e "${green} - - - Création du dossier conf${reset}"
+		        else
+	                echo -e "${red} - - - Erreur lors de la création du dossier conf${reset}"
+		        fi
+		    fi
+		    
 		    # Configuration des droits sur les dossiers
 		    # ------------------------------
 		    chmod 701 ${pathHome}
 		    chmod 705 ${pathHome}/www
 		    chmod 701 ${pathHome}/tmp
+		    chmod 701 ${pathHome}/conf
 		    chmod 600 ${pathHome}/logs
-
+		    
 		    if [ "${useGit}" = "y" ]; then
 		        chmod -R 600 ${pathHome}/.git
 		  		chmod 600 ${pathHome}/.gitignore 

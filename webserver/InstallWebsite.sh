@@ -16,7 +16,9 @@ if [ "$(whoami)" = "root" ]; then
     read website
     if [ "${website}" ]; then
 
-		defaultUser=$(echo ${website} | sed 's/\..*//g')
+		defaultUser=${website%.*}
+		defaultUser=${defaultUser/./_}
+		defaultUser=${defaultUser/-/_}
 
         echo -en "Nom d'utilisateur (${defaultUser}) : "
         read user
@@ -192,6 +194,7 @@ cache
 
 		    chown -R ${user}:${user} ${pathHome}
 		    chown -R root:root ${pathHome}/logs
+		    chown -R root:root ${pathHome}/conf
 
 		    if [ "${useGit}" = "y" ]; then
 		        chown -R root:root ${pathHome}/.git

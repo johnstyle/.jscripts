@@ -46,6 +46,7 @@
     undo = reset --soft HEAD^
     change = diff --stat
     lol = log --graph --pretty=format:'%C(red)%h%C(reset) %C(yellow)%ci %C(blue)%an%C(reset) %C(white)%m%C(reset)%C(green)%d%C(reset) %C(white)%s%C(reset)' --abbrev-commit --date=relative --all
+    lop = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 
 [apply]
     whitespace = fix

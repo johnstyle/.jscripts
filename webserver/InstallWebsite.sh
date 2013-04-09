@@ -40,6 +40,14 @@ if [ "$(whoami)" = "root" ]; then
 	            echo -e "${red} - - - Erreur lors de la création de l'utilisateur${reset}"
 	        fi
 	        
+		    # Création de l'acces FTP
+		    # ------------------------------
+            echo -en "Créer un acces FTP ? [y/n] "
+            read useFtp
+		    if [ "${useFtp}" = "y" ]; then
+	            passwd ${user}
+	        fi
+	        
 	        # Création du projet GIT
 		    # ------------------------------
             echo -en "Créer un projet Git ? [y/n] "

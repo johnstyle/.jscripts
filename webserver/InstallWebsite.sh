@@ -16,7 +16,9 @@ if [ "$(whoami)" = "root" ]; then
     read website
     if [ "${website}" ]; then
 
-		defaultUser=$(echo ${website} | sed 's/\..*//g')
+		defaultUser=${website%.*}
+		defaultUser=${defaultUser/./_}
+		defaultUser=${defaultUser/-/_}
 
         echo -en "Nom d'utilisateur (${defaultUser}) : "
         read user
@@ -36,6 +38,14 @@ if [ "$(whoami)" = "root" ]; then
 	            echo -e "${green} - - - Création de l'utilisateur${reset}"
 	        else
 	            echo -e "${red} - - - Erreur lors de la création de l'utilisateur${reset}"
+	        fi
+	        
+		    # Création de l'acces FTP
+		    # ------------------------------
+            echo -en "Créer un acces FTP ? [y/n] "
+            read useFtp
+		    if [ "${useFtp}" = "y" ]; then
+	            passwd ${user}
 	        fi
 	        
 	        # Création du projet GIT
@@ -192,6 +202,7 @@ cache
 
 		    chown -R ${user}:${user} ${pathHome}
 		    chown -R root:root ${pathHome}/logs
+		    chown -R root:root ${pathHome}/conf
 
 		    if [ "${useGit}" = "y" ]; then
 		        chown -R root:root ${pathHome}/.git

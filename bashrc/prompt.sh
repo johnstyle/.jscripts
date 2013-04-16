@@ -58,8 +58,20 @@ __parse_git_notclean() {
 __parse_git_dirty() {
   echo "$(__parse_git_notclean)$(__parse_git_added)$(__parse_git_modified)$(__parse_git_deleted)"
 }
-__parse_git_branch() {
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/ (\1$(__parse_git_dirty))/"
+__parse_git_location() {
+  location="unknow"
+  branch=$(git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(__parse_git_dirty)/")
+  if [[ "${branch}" != "(no branch)" ]]; then
+      location=${branch}
+  else
+      tag=$(git describe --tags 2> /dev/null)
+      if [[ "${tag}" != "" ]]; then
+          location="Tag:${tag}"
+      else
+          location="Commit:$(git rev-parse --short HEAD 2> /dev/null)"
+      fi
+  fi
+  echo "(${location})"
 }
 __git_bash_prompt() {
     SFI="$IFS"
@@ -95,12 +107,12 @@ __git_bash_prompt() {
         fi
         if [ -e .git ]
         then
-            gitinfo="$(__parse_git_branch)"
+            gitinfo="$(__parse_git_location)"
             if [ "${gitinfo}" ]
             then
                 #last=${i}
                 #printf "]"
-                printf "${Cyan}${gitinfo}"
+                printf "${Cyan} ${gitinfo}"
                 if [ ${i} != $((${count}-1)) ]
                 then
                     printf " ${Red}"

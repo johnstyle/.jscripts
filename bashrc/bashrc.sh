@@ -20,6 +20,9 @@ if [ -f ~/Scripts/bashrc/alias.sh ]; then
     . ~/Scripts/bashrc/alias.sh
 fi
 
+# User et host local
+PS1="${BGreen}\u${Yellow}@\h "
+
 # Custom prompt
 if [ -f ~/Scripts/bashrc/prompt.sh ]; then
     . ~/Scripts/bashrc/prompt.sh

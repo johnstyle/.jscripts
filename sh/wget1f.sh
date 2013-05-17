@@ -22,10 +22,10 @@ fi
 
 if [ "${url}" ]; then
 
-    if [ "${login}" && "${password}" ]; then
+    if [[ "${login}" && "${password}" ]]; then
 
         wget --quiet \
-             --post-data "mail={$login}&pass={$password}&lt=on&valider=Envoyer" \
+             --post-data "mail=${login}&pass=${password}&lt=on&valider=Envoyer" \
              --save-cookies wget1f.cookies \
              --keep-session-cookies \
              --user-agent "${USER_AGENT}" \
@@ -40,14 +40,6 @@ if [ "${url}" ]; then
              "${url}"
 
         rm wget1f.cookies
-        
-    else
-
-        wget --user-agent "${USER_AGENT}" \
-             --content-disposition \
-             -c \
-             ${options} \
-             "${url}"
 
     fi
 else 

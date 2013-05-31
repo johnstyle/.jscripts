@@ -13,14 +13,14 @@ apt-get update
 
 # Suppression des packets
 # -------------------------------------------------
-apt-get autoremove --purge thunderbird empathy unity-lens-shopping
+apt-get autoremove --purge thunderbird empathy empathy-common unity-lens-shopping
 
 # Installation des packets
 # -------------------------------------------------
 apt-get install \
 apache2 php5 mysql-server libapache2-mod-php5 php5-mysql php5-curl phpmyadmin git gftp \
-openjdk-7-jre vim curl \
-vlc homebank chromium-browser calibre keepassx
+openjdk-7-jre vim curl ssh samba \
+vlc homebank chromium-browser calibre keepassx hplip pidgin skanlite
 
 # Nettoyage des packets
 # -------------------------------------------------

@@ -59,7 +59,7 @@ if [ -f "${ABSPATH}/backup.conf" ]; then
           bye
 EOF
 
-        rm "${TMP_DIR}/*"
+        rm ${TMP_DIR}/*
     else    
         echo "Veuillez renseigner les dossiers et fichiers à sauvegarder"
     fi

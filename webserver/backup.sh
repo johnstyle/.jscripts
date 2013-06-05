@@ -24,46 +24,32 @@ if [ -f "${ABSPATH}/backup.conf" ]; then
         MAX_DAYS=${DEFAULT_MAX_DAYS}
     fi    
 
+    OLDDAY=$(date --iso -d "${MAX_DAYS} days ago")
+
     if [ ! "${#DIRECTORIES_SAVE[@]}" ]; then
         DIRECTORIES_SAVE['backup']=(${DIRECTORIES_SAVE})
     fi
 
     if [ "${#DIRECTORIES_SAVE[@]}" > 0 ]; then
 
-        files=()
-
         for filename in "${!DIRECTORIES_SAVE[@]}"; do
-
-            file="${filename}.tar.gz"
-
-            tar -zcf ${TMP_DIR}/${file} ${DIRECTORIES_SAVE[${filename}]}
-
-            files+=(${file})
+            tar -zcf ${TMP_DIR}/${filename}.tar.gz ${DIRECTORIES_SAVE[${filename}]}
         done
 
-        ftp -in <(
-          echo "open ${FTP_HOST}"
-          echo "user ${FTP_USER} ${FTP_PASS}"
-          echo "bin"
-          echo "verbose"
-          echo "prompt"
-         
-          # Suppression des vielles archives
-          if [ "${MAX_DAYS}" ]; then
-            oldday=$(date --iso -d "${MAX_DAYS} days ago")
-            echo "rm -r ${oldday}"
-          fi
-          
-          echo "mkdir ${TODAY}"
-          echo "cd ${TODAY}"
-          
-          # Envoi des nouvelles archives
-          for file in "${files[@]}"; do
-            echo "put ${TMP_DIR}/${file} ${file}"
-          done
+        cd ${TMP_DIR}
 
-          echo "bye"
-        )
+        ftp -in <<EOF
+          open ${FTP_HOST}
+          user ${FTP_USER} ${FTP_PASS}
+          bin
+          verbose
+          prompt
+          rm ${OLDDAY}
+          mkdir ${TODAY}
+          cd ${TODAY}
+          mput *
+          bye
+EOF
 
         rm ${TMP_DIR}/*
     else    

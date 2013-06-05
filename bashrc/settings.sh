@@ -40,3 +40,4 @@ xterm*|rxvt*)
     ;;
 esac
 
+export EDITOR=vim

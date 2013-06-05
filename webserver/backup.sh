@@ -44,6 +44,9 @@ if [ -f "${ABSPATH}/backup.conf" ]; then
           bin
           verbose
           prompt
+          cd ${OLDDAY}
+          mdelete *
+          cd ../
           rm ${OLDDAY}
           mkdir ${TODAY}
           cd ${TODAY}

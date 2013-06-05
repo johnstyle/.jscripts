@@ -27,5 +27,6 @@ alias ....='cd ../../../'
 alias .....='cd ../../../../'
 alias ......='cd ../../../../../'
 
-alias upgrade='apt-get update && apt-get upgrade && apt-get clean'
+# System
+alias upgrade='apt-get update && apt-get upgrade && apt-get auto-remove --purge && apt-get autoclean'
 

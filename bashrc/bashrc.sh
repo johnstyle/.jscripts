@@ -3,6 +3,11 @@
 # Utilisation :
 # cp -f ~/Scripts/bashrc/bashrc.sh ~/.bashrc && source ~/.bashrc
 
+# Colors
+if [ -f ~/Scripts/bashrc/colors.sh ]; then
+    . ~/Scripts/bashrc/colors.sh
+fi
+
 # Settings
 if [ -f ~/Scripts/bashrc/settings.sh ]; then
     . ~/Scripts/bashrc/settings.sh
@@ -20,8 +25,12 @@ if [ -f ~/Scripts/bashrc/alias.sh ]; then
     . ~/Scripts/bashrc/alias.sh
 fi
 
-# User et host local
-PS1="${BGreen}\u${Yellow}@\h "
+# User et host
+if [ "$USER" == "root" ]; then
+    PS1="${On_Green}${BWhite}[\h]${Color_Off} "
+else
+    PS1="${On_Green}\u@[\h]${Color_Off} "
+fi
 
 # Custom prompt
 if [ -f ~/Scripts/bashrc/prompt.sh ]; then

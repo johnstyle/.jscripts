@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ABSPATH=$(dirname $(readlink -f $0))
+CONFIG_PATH="${HOME}/.config"
 TODAY=$(date --iso)
 
 DEFAULT_TMP_DIR='/tmp/backup'
@@ -8,9 +8,9 @@ DEFAULT_MAX_DAYS=10
 
 declare -A DIRECTORIES_SAVE
 
-if [ -f "${ABSPATH}/backup.conf" ]; then
+if [ -f "${CONFIG_PATH}/backup.conf" ]; then
 
-    . ${ABSPATH}/backup.conf
+    . ${CONFIG_PATH}/backup.conf
 
     if [ ! "${TMP_DIR}" ]; then
         TMP_DIR=${DEFAULT_TMP_DIR}
@@ -64,6 +64,6 @@ else
     FTP_PASS=''
     TMP_DIR='${DEFAULT_TMP_DIR}'
     MAX_DAYS=${DEFAULT_MAX_DAYS}
-    DIRECTORIES_SAVE['backup']=''" > ${ABSPATH}/backup.conf
-    echo "Veuillez renseigner le fichier ${ABSPATH}/backup.conf"
+    DIRECTORIES_SAVE['backup']=''" > ${CONFIG_PATH}/backup.conf
+    echo "Veuillez renseigner le fichier ${CONFIG_PATH}/backup.conf"
 fi

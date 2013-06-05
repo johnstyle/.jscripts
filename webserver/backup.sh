@@ -30,7 +30,7 @@ if [ -f "${ABSPATH}/backup.conf" ]; then
         DIRECTORIES_SAVE['backup']=(${DIRECTORIES_SAVE})
     fi
 
-    if [ "${#DIRECTORIES_SAVE[@]}" > 0 ]; then
+    if [ "${#DIRECTORIES_SAVE[@]}" -gt 0 ]; then
 
         for filename in "${!DIRECTORIES_SAVE[@]}"; do
             tar -zcf ${TMP_DIR}/${filename}.tar.gz ${DIRECTORIES_SAVE[${filename}]}

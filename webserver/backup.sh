@@ -1,6 +1,10 @@
 #!/bin/bash
 
-CONFIG_PATH="${HOME}/.config"
+if [ -f "~/.bashrc" ]; then
+. ~/.bashrc
+fi
+
+CONFIG_PATH="~/.config"
 TODAY=$(date --iso)
 
 DEFAULT_TMP_DIR='/tmp/backup'

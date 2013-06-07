@@ -1,6 +1,7 @@
 #!/bin/bash
+. ~/.bashrc
 
-ABSPATH=$(dirname $(readlink -f $0))
+CONFIG_PATH="${HOME}/.config"
 DEFAULT_LIST_FILE="wget1f.txt"
 
 success=false
@@ -57,9 +58,9 @@ function removeLine {
     fi
 }
 
-if [ -f "${ABSPATH}/wget1f.conf" ]; then
+if [ -f "${CONFIG_PATH}/wget1f.conf" ]; then
 
-    . ${ABSPATH}/wget1f.conf
+    . ${CONFIG_PATH}/wget1f.conf
 
     if [ ! "${USER_AGENT}" ]; then
         USER_AGENT="Mozilla/5.0 (Linux; U; Linux x86; fr-FR; rv:1.7.5) Gecko/20041202 Firefox/1.0"
@@ -112,7 +113,7 @@ if [ -f "${ABSPATH}/wget1f.conf" ]; then
         echo "Impossible d'acceder au dossier ${DOWNLOAD_PATH}"  
     fi
 else
-    echo "LOGIN=''\nPASSWORD=''\nDOWNLOAD_PATH=''\nUSER_AGENT=''" > "${ABSPATH}/wget1f.conf"
-    echo "Veuillez complèter le fichier ${ABSPATH}/wget1f.conf"
+    echo "LOGIN=''\nPASSWORD=''\nDOWNLOAD_PATH=''\nUSER_AGENT=''" > "${CONFIG_PATH}/wget1f.conf"
+    echo "Veuillez complèter le fichier ${CONFIG_PATH}/wget1f.conf"
 fi
 

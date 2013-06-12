@@ -60,7 +60,7 @@ EOF
         echo "Veuillez renseigner les dossiers et fichiers à sauvegarder"
     fi
 else
-    echo "FTP_HOST=''
+    echo -e "FTP_HOST=''
     FTP_USER=''
     FTP_PASS=''
     TMP_DIR='${DEFAULT_TMP_DIR}'

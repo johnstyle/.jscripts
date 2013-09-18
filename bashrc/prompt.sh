@@ -1,16 +1,16 @@
 #!/bin/bash
 
 __parse_git_deleted() {
-  [[ $(git status 2> /dev/null | grep "deleted:") != "" ]] && echo "-"
+  [[ $(git status 2> /dev/null | grep "deleted:\|effacé :") != "" ]] && echo "-"
 }
 __parse_git_added() {
-  [[ $(git status 2> /dev/null | grep "Untracked files:") != "" ]] && echo '+'
+  [[ $(git status 2> /dev/null | grep "Untracked files:\|Fichiers non suivis:") != "" ]] && echo '+'
 }
 __parse_git_modified() {
-  [[ $(git status 2> /dev/null | grep "renamed:\|modified:\|new file:") != "" ]] && echo "*"
+  [[ $(git status 2> /dev/null | grep "renamed:\|modified:\|new file:\|renommé :\|modifié :\|nouveau :") != "" ]] && echo "*"
 }
 __parse_git_notclean() {
-  [[ $(git status 2> /dev/null | grep "nothing to commit") == "" ]] && echo "!"
+  [[ $(git status 2> /dev/null | grep "nothing to commit\|rien à valider") == "" ]] && echo "!"
 }
 __parse_git_dirty() {
   echo "$(__parse_git_notclean)$(__parse_git_added)$(__parse_git_modified)$(__parse_git_deleted)"

@@ -7,18 +7,15 @@ if [ -f "${CONFIG_PATH}/rsync-ssh.conf" ]; then
 
     . ${CONFIG_PATH}/rsync-ssh.conf
 
+    excludeFrom=''
+    if [ -f "${CONFIG_PATH}/rsync-excludes.conf" ]; then
+        excludeFrom="--exclude-from ${CONFIG_PATH}/rsync-excludes.conf"
+    fi
+
     for directory in ${DIRECTORIES_SAVE[@]}; do
-        rsync -a --stats --progress --delete \
-            --backup --suffix=".backup" \
-            --filter "- lost+found/" \
-            --filter "- .thumbnails/" \
-            --filter "- .Trash/" \
-            --filter "- .cache/" \
-            --filter "- .beagle/" \
-            --filter "- *.tmp" \
-            --filter "- *.iso" \
-            --filter "- *~" \
-            --filter "- *.backup" \
+        # --backup --suffix=".rsync-backup" \
+        rsync -a --stats --progress --delete --delete-excluded --force \
+            ${excludeFrom} \
             ${directory} \
             -e ssh ${SSH}:${DESTINATION_PATH}${directory}
     done

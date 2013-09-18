@@ -93,7 +93,7 @@ class MtGox:
         f = urllib.urlopen('http://data.mtgox.com/api/2/BTC'+self.currency+'/money/ticker')
         data = json.loads(f.read())
         display  = "⇩%.2f" % float(data['data']['low']['value'])
-        display += " [ " + money + "%.2f" % float(data['data']['last_all']['value']) + " ] "
+        display += " [ " + money + "%.2f" % float(data['data']['last_local']['value']) + " ] "
         display += "⇧%.2f" % float(data['data']['high']['value'])
         
         self.ind.set_label("Mt.Gox: " + display)

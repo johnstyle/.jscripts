@@ -2,7 +2,7 @@
 
 git fetch
 
-tag=$(git describe)
+tag=$(git describe --tags $(git rev-list --tags --max-count=1))
 version=${tag%%.*}
 release=${tag#*.}
 release=${release%.*}

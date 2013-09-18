@@ -1,6 +1,4 @@
 #!/bin/bash
-# 
-# alias hotfix='. /home/tyreparse/crawler/script/alias/hotfix.sh'
 
 git fetch
 

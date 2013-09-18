@@ -1,6 +1,4 @@
 #!/bin/bash
-# 
-# alias release='. /home/tyreparse/crawler/script/alias/release.sh'
 
 git fetch
 

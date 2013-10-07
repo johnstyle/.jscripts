@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Utilisation :
-# cp -f ~/Scripts/bashrc/bashrc.sh ~/.bashrc && source ~/.bashrc
-
 # Colors
 if [ -f ~/Scripts/bashrc/colors.sh ]; then
     . ~/Scripts/bashrc/colors.sh
@@ -26,10 +23,12 @@ if [ -f ~/Scripts/bashrc/alias.sh ]; then
 fi
 
 # User et host
-if [ "$USER" == "root" ]; then
-    PS1="${On_Green}${BWhite}[\h]${Color_Off} "
-else
-    PS1="${On_Green}\u@[\h]${Color_Off} "
+if [ ! "${PS1}" ]; then
+    if [ "$USER" == "root" ]; then
+        PS1="${On_Green}${BWhite}[\h]${Color_Off} "
+    else
+        PS1="${On_Green}\u@[\h]${Color_Off} "
+    fi
 fi
 
 # Custom prompt

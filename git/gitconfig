@@ -43,13 +43,15 @@
     tree = log --graph --pretty=oneline --decorate
     pom = push --tags origin master
     pod = push --tags origin develop
+    pof = !git pom && git pod && git checkout master
     amend = commit --amend
     undo = reset --soft HEAD^
     unstage = reset HEAD --
     change = diff --stat
     diffc = diff --cached
     lol = log --graph --pretty=format:'%C(red)%h%C(reset) %C(yellow)%ci %C(blue)%an%C(reset) %C(white)%m%C(reset)%C(green)%d%C(reset) %C(white)%s%C(reset)' --abbrev-commit --date=relative --all
-    lop = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    los = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    lop = !git lol ORIG_HEAD.. --stat --no-merges
 
 [apply]
     whitespace = fix

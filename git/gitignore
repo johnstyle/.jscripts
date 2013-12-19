@@ -1,45 +1,56 @@
-# Numerous always-ignore extensions
-*.diff
-*.err
-*.orig
-*.log
-*.rej
-*.swo
-*.swp
-*.zip
-*.vi
+# https://github.com/github/gitignore
+
+# PhpStorm
+# -----------------------------------
+.idea/
+*.ipr
+*.iws
+*.iml
+out/
+.idea_modules/
+
+# Netbean
+# -----------------------------------
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# VIM
+# -----------------------------------
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
 *~
-*.sass-cache
 
-# OS or Editor folders
+# Kate
+# -----------------------------------
+.*.kate-swp
+.swp.*
+
+# OSX
+# -----------------------------------
 .DS_Store
+.AppleDouble
+.LSOverride
+Icon
 ._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+# -----------------------------------
 Thumbs.db
-.cache
-.project
-.settings
-.tmproj
-*.esproj
-nbproject
-*.sublime-project
-*.sublime-workspace
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
 
-# Komodo
-*.komodoproject
-.komodotools
-
-# Folders to ignore
-.hg
-.svn
-.CVS
-.idea
-node_modules
-dist
-
-# Home
-.bash_history
-.mysql_history
-tmp
-logs
-log
-cache

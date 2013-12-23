@@ -49,7 +49,7 @@
     unstage = reset HEAD --
     change = diff --stat
     diffc = diff --cached
-    lol = log --graph --pretty=format:'%C(red)%h%C(reset) %C(yellow)%ci %C(blue)%an%C(reset) %C(white)%m%C(reset)%C(green)%d%C(reset) %C(white)%s%C(reset)' --abbrev-commit --date=relative --all
+    lol = log --graph --pretty=format:'%C(red)%h%C(reset) %C(yellow)%ci %C(blue)%an%C(reset) %C(white)%m%C(reset)%C(green)%d%C(reset) %C(white)%s%C(reset)' --abbrev-commit --date=relative
     los = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     lop = !git lol ORIG_HEAD.. --stat --no-merges
     rmtag = !sh -c 'git tag -d "$0" && git push origin :refs/tags/"$0"'

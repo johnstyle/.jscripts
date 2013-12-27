@@ -1,4 +1,6 @@
 #!/bin/bash
 
-cp ~/.jscripts/bash/rc/.bashrc ~/.bashrc
-cp ~/.jscripts/vim/rc/.vimrc ~/.vimrc
+cp ~/.jscripts/bash/rc/.bashrc ~/
+cp ~/.jscripts/vim/rc/.vimrc ~/
+cp ~/.jscripts/git/rc/.gitignore_global ~/
+cp ~/.jscripts/git/rc/.gitconfig ~/

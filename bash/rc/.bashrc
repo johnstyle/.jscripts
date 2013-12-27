@@ -1,4 +1,4 @@
 #!/bin/bash
 
-. ~/Scripts/bash/rc/bootstrap.sh
+. ~/.jscripts/bash/rc/bootstrap.sh
 

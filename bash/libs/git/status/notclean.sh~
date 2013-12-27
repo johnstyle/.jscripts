@@ -1,6 +1,0 @@
-#!/bin/bash
-
-gitStatusNotClean ()
-{
-    [[ $(git status 2> /dev/null | grep "nothing to commit\|rien à valider") == "" ]] && echo "!"
-}

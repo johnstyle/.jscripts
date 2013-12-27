@@ -3,8 +3,13 @@
 gitStatus ()
 {
   location="unknow"
+  
   status=$(git status 2> /dev/null)
-  branch=$(git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(gitStatusNotClean status)$(gitStatusAdded status)$(gitStatusModified status)$(gitStatusDeleted status)/")
+  notclean=$(gitStatusNotClean "${status}")
+  added=$(gitStatusAdded "${status}")
+  modified=$(gitStatusModified "${status}")
+  deleted=$(gitStatusDeleted "${status}")
+  branch=$(git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1${notclean}${added}${modified}${deleted}/")
   
   if [[ "${branch}" != "(no branch)" ]]; then
       location=${branch}

@@ -1,7 +1,0 @@
-#!/bin/bash
-
-gitStatusModified ()
-{
-    [[ $(git status 2> /dev/null | grep "renamed:\|modified:\|new file:\|renommé :\|modifié :\|nouveau :") != "" ]] && echo "*"
-}
-

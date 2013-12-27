@@ -1,18 +1,18 @@
 #!/bin/bash
 
-. ~/.jscripts/bash/libs/sourcePath.sh
+. ~/.jscripts/bash/libs/include.sh
 
 # Chargement des couleurs
-. ~/.jscripts/bash/colors.sh
+include ~/.jscripts/bash/colors.sh
 
 # Chargement de la configuration par défaut
-sourcePath "~/.jscripts/bash/rc/default/"
+include ~/.jscripts/bash/rc/default/
 
 # Chargement des alias
-sourcePath "~/.jscripts/bash/rc/alias/"
+include ~/.jscripts/bash/rc/alias/
 
 # Chargement des libraries
-sourcePath "~/.jscripts/bash/libs/"
+include ~/.jscripts/bash/libs/
 
 # Root / User
 if [ ! -z "${PS1_DEFAULT}" ]; then

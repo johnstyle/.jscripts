@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cp bash/rc/.bashrc ~/.bashrc
-cp vim/rc/.vimrc ~/.vimrc
+cp ~/.jscripts/bash/rc/.bashrc ~/.bashrc
+cp ~/.jscripts/vim/rc/.vimrc ~/.vimrc

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function rmFiles ()
+function rmfiles ()
 {
     if [[ "${1}" ]]; then
         if [[ "${1}" = '-h' ]]; then

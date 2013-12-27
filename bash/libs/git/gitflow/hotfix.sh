@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function gitFlowRelease ()
+function hotfix ()
 {
     git fetch
 
@@ -10,11 +10,9 @@ function gitFlowRelease ()
     release=${release%.*}
     hotfix=${tag##*.}
 
-    release=$((${release} + 1))
-    hotfix=0
+    hotfix=$((${hotfix} + 1))
 
     tag="${version}.${release}.${hotfix}"
 
-    git flow release start ${tag}
+    git flow hotfix start ${tag}
 }
-    

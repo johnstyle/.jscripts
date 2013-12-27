@@ -1,0 +1,62 @@
+[core]
+    editor = vim
+    pager = less -FRSX
+    whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+    excludesfile = ~/.gitignore_global
+
+[diff]
+    tool = vimdiff
+
+[color]
+    branch = auto
+    diff = auto
+    status = auto
+    interactive = auto
+    ui = true
+    pager = true
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow
+    frag = magenta
+    old = red
+    new = green
+
+[color "status"]
+    added = green
+    changed = red
+    untracked = yellow
+
+[alias]
+    st = status -bs
+    ci = commit
+    cm = commit -m
+    br = branch
+    df = diff
+    lg = log -p
+    co = checkout
+    who = shortlog -sne
+    tree = log --graph --pretty=oneline --decorate
+    pom = push --tags origin master
+    pod = push --tags origin develop
+    pof = !git pom && git pod && git checkout master
+    amend = commit --amend
+    undo = reset --soft HEAD^
+    unstage = reset HEAD --
+    change = diff --stat
+    diffc = diff --cached
+    lol = log --graph --pretty=format:'%C(red)%h%C(reset) %C(yellow)%ci %C(blue)%an%C(reset) %C(white)%m%C(reset)%C(green)%d%C(reset) %C(white)%s%C(reset)' --abbrev-commit --date=relative
+    los = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    lop = !git lol ORIG_HEAD.. --stat --no-merges
+    rmtag = !sh -c 'git tag -d "$0" && git push origin :refs/tags/"$0"'
+
+[apply]
+    whitespace = fix
+
+[credential]
+    helper = cache --timeout=3600
+

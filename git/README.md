@@ -1,7 +1,7 @@
 ##Utilisation :##
 ```
 [include]
-    path = ~/Scripts/git/gitconfig
+    path = ~/<scripts_path>/git/gitconfig
 
 [user]
     name = <user_name>

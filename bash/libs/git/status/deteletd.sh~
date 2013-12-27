@@ -1,0 +1,7 @@
+#!/bin/bash
+
+gitStatusDeleted ()
+{
+    [[ $(git status 2> /dev/null | grep "deleted:\|effacé :") != "" ]] && echo "-"
+}
+

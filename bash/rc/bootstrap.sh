@@ -1,9 +1,15 @@
 #!/bin/bash
 
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
 . ~/.jscripts/bash/libs/include.sh
 
 # Chargement des couleurs
 include ~/.jscripts/bash/colors.sh
+
+# Chargement de la config
+include ~/.jscripts/bash/rc/config.sh
 
 # Chargement de la configuration par défaut
 include ~/.jscripts/bash/rc/default/
@@ -15,7 +21,7 @@ include ~/.jscripts/bash/rc/alias/
 include ~/.jscripts/bash/libs/
 
 # Root / User
-if [ ! -z "${PS1_DEFAULT}" ]; then
+if [ -z "${PS1_DEFAULT+set}" ]; then
     if [ "$USER" == "root" ]; then
         PS1_DEFAULT="${On_Red}${BWhite}[\h]${Color_Off} "
     else
@@ -32,4 +38,3 @@ fi
 
 # Prompt
 PS1="${PS1_DEFAULT}${gitinfo}${Red} > ${White}"
-

@@ -51,4 +51,4 @@ vi /etc/init.d/firewall
 # Configuration fail2ban
 cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.conf.save
 
-vi etc/fail2ban/jail.conf.local
+vi /etc/fail2ban/jail.conf.local

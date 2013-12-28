@@ -9,5 +9,5 @@ Copier/coller les fichiers suivants à la racine de votre home (~/) :
     ~/.jscripts/git/rc/.gitconfig
 
 
-Ou executer le script install.sh
+Ou executer le script install.sh <br />
 Attention cela écrasera vos configurations précédentes !

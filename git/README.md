@@ -1,9 +1,11 @@
-##Utilisation :##
-```
-[include]
-    path = ~/<scripts_path>/git/gitconfig
+Utilisation
+===========
 
-[user]
-    name = <user_name>
-    email = <email>
-```
+Editer le fichier ~/.gitconfig et copier/coller
+
+    [include]
+        path = ~/.jscripts/git/gitconfig
+
+    [user]
+        name = <user_name>
+        email = <email>

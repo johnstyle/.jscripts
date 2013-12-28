@@ -23,7 +23,7 @@ include ~/.jscripts/bash/libs/
 # Root / User
 if [ -z "${PS1_DEFAULT+set}" ]; then
     if [ "$USER" == "root" ]; then
-        PS1_DEFAULT="${On_Red}${BWhite}[\h]${Color_Off} "
+        PS1_DEFAULT="${On_Red}${BWhite}\u@[\h]${Color_Off} "
     else
         PS1_DEFAULT="${On_Green}${BWhite}\u@[\h]${Color_Off} "
     fi

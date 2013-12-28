@@ -1,0 +1,20 @@
+[apache-404]
+enabled = true
+port = http
+filter = apache-404
+logpath = /var/log/apache*/error*.log
+maxretry = 10
+
+[apache-admin]
+enabled = true
+port = http
+filter = apache-admin
+logpath = /var/log/apache*/error*.log
+maxretry = 6
+
+[apache-w00tw00t]
+enabled = true
+filter = apache-w00tw00t
+action = iptables[name=Apache-w00tw00t,port=80,protocol=tcp]
+logpath = /var/log/apache2/access*.log
+maxretry = 1

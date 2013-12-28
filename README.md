@@ -10,4 +10,4 @@ Copier/coller les fichiers suivants à la racine de votre home (~/) :
 
 
 Ou executer le script install.sh
-Attention cela écrasera toutes vos configuration précédentes !
+Attention cela écrasera vos configurations précédentes !

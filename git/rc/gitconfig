@@ -2,8 +2,9 @@
     editor = vim
     pager = less -FRSX
     whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+    autocrlf = input
     excludesfile = ~/.gitignore_global
-
+   
 [diff]
     tool = vimdiff
 

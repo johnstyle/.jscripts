@@ -3,7 +3,18 @@
 # Installation
 apt-get install curl git apache2 php5 mysql-server \
 libapache2-mod-php5 php5-mysql php5-curl php5-gd php-pear \
-apache2-suexec apache2-suexec-custom libapache2-mod-suphp
+apache2-suexec apache2-suexec-custom libapache2-mod-suphp \
+nodejs nodejs-legacy npm
+
+
+# Installation de bower
+npm install -g bower
+
+
+# Installation de composer
+cd /tmp
+curl -s https://getcomposer.org/installer | php
+mv composer.phar /usr/local/bin/composer
 
 
 # Configuration apache2

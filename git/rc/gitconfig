@@ -33,31 +33,46 @@
     untracked = yellow
 
 [alias]
+
+    # SHORTCUT
     st = status -bs
     ci = commit
     cm = commit -m
     br = branch
     df = diff
-    lg = log -p
     co = checkout
-    who = shortlog -sne
-    tree = log --graph --pretty=oneline --decorate
-    pom = push --tags origin master
-    pod = push --tags origin develop
-    pof = !git pom && git pod && git checkout master
+
+    # EDIT
     amend = commit --amend
     undo = reset --soft HEAD^
     unstage = reset HEAD --
+
+    # DIFF
     change = diff --stat
     diffc = diff --cached
+
+    # PUSH ORIGIN
+    pom = push --tags origin master
+    pod = push --tags origin develop
+    pof = !git pom && git pod && git checkout master
+
+    # DELETE ORIGIN
+    rmtag = !sh -c 'git tag -d "$0" && git push origin :refs/tags/"$0"'
+    rmbranch = !sh -c 'git branch -D "$0" && git push origin :"$0"'
+
+    # LOG
+    tree = log --graph --pretty=oneline --decorate
     lol = log --graph --pretty=format:'%C(red)%h%C(reset) %C(yellow)%ci %C(blue)%an%C(reset) %C(white)%m%C(reset)%C(green)%d%C(reset) %C(white)%s%C(reset)' --abbrev-commit --date=relative
     los = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     lop = !git lol ORIG_HEAD.. --stat --no-merges
-    rmtag = !sh -c 'git tag -d "$0" && git push origin :refs/tags/"$0"'
+
+    # INFO
+    who = shortlog -sne
+    whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+	whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
 
 [apply]
     whitespace = fix
 
 [credential]
     helper = cache --timeout=3600
-

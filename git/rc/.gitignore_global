@@ -2,43 +2,21 @@
 
 # PhpStorm
 # -----------------------------------
-.idea/
-*.ipr
-*.iws
-*.iml
-out/
-.idea_modules/
-
-# Netbean
-# -----------------------------------
-nbproject/private/
-build/
-nbbuild/
-dist/
-nbdist/
-nbactions.xml
-nb-configuration.xml
+/.idea/
+/.idea_modules/
 
 # VIM
 # -----------------------------------
-[._]*.s[a-w][a-z]
-[._]s[a-w][a-z]
 *.un~
 Session.vim
 .netrwhist
 *~
-
-# Kate
-# -----------------------------------
-.*.kate-swp
-.swp.*
 
 # OSX
 # -----------------------------------
 .DS_Store
 .AppleDouble
 .LSOverride
-Icon
 ._*
 .Spotlight-V100
 .Trashes
@@ -49,8 +27,8 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
-*.cab
-*.msi
-*.msm
-*.msp
+
+# MySql Workbench
+# -----------------------------------
+*.bak
 

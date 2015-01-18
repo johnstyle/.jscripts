@@ -1,24 +1,28 @@
 #!/bin/bash
 
+if [ -z "$JSCRIPTS_BASE" ]; then
+    JSCRIPTS_BASE="${HOME}/.jscripts/"
+fi
+
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-. ~/.jscripts/bash/libs/include.sh
+. "${JSCRIPTS_BASE}bash/libs/include.sh"
 
 # Chargement des couleurs
-include ~/.jscripts/bash/colors.sh
+include "${JSCRIPTS_BASE}bash/colors.sh"
 
 # Chargement de la config
-include ~/.jscripts/bash/rc/config.sh
+include "${JSCRIPTS_BASE}rc/config.sh"
 
 # Chargement de la configuration par défaut
-include ~/.jscripts/bash/rc/default/
+include "${JSCRIPTS_BASE}rc/default/"
 
 # Chargement des alias
-include ~/.jscripts/bash/rc/alias/
+include "${JSCRIPTS_BASE}bash/rc/alias/"
 
 # Chargement des libraries
-include ~/.jscripts/bash/libs/
+include "${JSCRIPTS_BASE}bash/libs/"
 
 # Root / User
 if [ -z "${PS1_DEFAULT+set}" ]; then
@@ -38,3 +42,4 @@ fi
 
 # Prompt
 PS1="${PS1_DEFAULT}${gitinfo}${Red} > ${White}"
+

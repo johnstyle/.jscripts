@@ -13,10 +13,10 @@ fi
 include "${JSCRIPTS_BASE}bash/colors.sh"
 
 # Chargement de la config
-include "${JSCRIPTS_BASE}rc/config.sh"
+include "${JSCRIPTS_BASE}bash/rc/config.sh"
 
 # Chargement de la configuration par défaut
-include "${JSCRIPTS_BASE}rc/default/"
+include "${JSCRIPTS_BASE}bash/rc/default/"
 
 # Chargement des alias
 include "${JSCRIPTS_BASE}bash/rc/alias/"
